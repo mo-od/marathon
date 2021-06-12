@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
-
-function Personal() {
+function Personal({disPatch, counters}) {
+  console.log(counters);
   return (
+    
     <Container>
       <Box>
         <Title>ข้อมูลส่วนตัว</Title>
@@ -71,7 +73,13 @@ function Personal() {
   );
 }
 
-export default Personal;
+const mapStateToProps = function (state) {
+  return {
+    counters: state,
+  };
+};
+
+export default connect(mapStateToProps)(Personal);
 
 const Box = styled.div`
   border-solid: 1px;
@@ -148,4 +156,4 @@ const Label = styled.div``;
 const Span = styled.div`
   font-size: 20px;
   color: #ffffff;
-`
+`;
