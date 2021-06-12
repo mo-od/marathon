@@ -1,3 +1,8 @@
+// const data = [{
+//   shirtSize: "",
+// }]
+
+
 export default (state = [], action) => {
     switch (action.type) {
       case "Add":

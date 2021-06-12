@@ -1,3 +1,11 @@
+// const data = [{
+//   everRun: false,
+//   timeFinish: '',
+
+// }]
+
+
+
 export default (state = [], action) => {
     switch (action.type) {
       case "Add":

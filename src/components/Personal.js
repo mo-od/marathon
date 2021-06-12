@@ -1,81 +1,297 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+// import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
 
-function Personal({disPatch, counters}) {
-  console.log(counters);
-  return (
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+  },
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
+
+function getSteps() {
+  return [
+    "ข้อมูลส่วนตัว",
+    "ข้อมูลเกี่ยวกับการวิ่ง",
+    "ผู้ติดต่อฉุกเฉิน",
+    "ข้อมูลทางการแพทย์",
+    "เสื้อของที่ระลึก",
     
+  ];
+}
+
+// function getStepContent(stepIndex) {
+//   switch (stepIndex) {
+//     case 0:
+//       return 'Select campaign settings...';
+//     case 1:
+//       return 'What is an ad group anyways?';
+//     case 2:
+//       return 'This is the bit I really care about!';
+//     default:
+//       return 'Unknown stepIndex';
+//   }
+// }
+
+function Personal({ dispatch, dataFromStore }) {
+  console.log("counters ::", dataFromStore);
+  const [getFirstNameTH, setFirstNameTH] = useState("")
+  const [getLastNameTH, setLastNameTH] = useState("")
+  const [getFirstNameENG, setFirstNameENG] = useState("")
+  const [getLastNameENG, setLastNameENG] = useState("")
+  const [getDate, setDate] = useState("")
+  const [getEmail, setEmail] = useState("")
+  const [getId, setId] = useState("")
+  const [getAddress, setAddress] = useState("")
+  const [getPhoneNumber, setPhoneNumber] = useState("")
+  const [getImageUrl, setImageUrl] = useState("")
+  
+
+
+
+  const [getPrefixTh, setPrefixTh] = useState("");
+  const [getPrefixEng, setPrefixEng] = useState("");
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = getSteps();
+  const [name, setName] = useState("");
+  
+  const handleChangeFirstNameTH = (event) => {
+    setFirstNameTH(event.target.value);
+  };
+  const handleChangeLastNameTH = (event) => {
+    setLastNameTH(event.target.value);
+  };
+  const handleChangeFirstNameENG = (event) => {
+    setFirstNameENG(event.target.value);
+  };
+  const handleChangeLastNameENG = (event) => {
+    setLastNameENG(event.target.value);
+  };
+  const handleChangeDate = (event) => {
+    setDate(event.target.value);
+  };
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const handleChangeId = (event) => {
+    setId(event.target.value);
+  };
+  const handleChangeAddress = (event) => {
+    setAddress(event.target.value);
+  };
+  const handleChangePhoneNumber = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+  const handleChangeImageUrl = (event) => {
+    setImageUrl(event.target.value);
+  };
+  const handleChangeTh = (event) => {
+    setPrefixTh(event.target.value);
+  };
+  const handleChangeEng = (event) => {
+    setPrefixEng(event.target.value);
+  };
+  
+    
+  const submitButton = () => {
+    console.log("hello",getFirstNameTH)
+    const dataSet ={
+      prefixTH: getPrefixTh,
+      firstNameTH: getFirstNameTH,
+      lastNameTH: getLastNameTH,
+      prefixENG: getPrefixEng,
+      firstNameENG: getFirstNameENG,
+      lastNameENG: getLastNameENG,
+      birthDay:getDate ,
+      email:getEmail ,
+      idCard:getId ,
+      address:getAddress ,
+      phoneNumber:getPhoneNumber ,
+      imageUrl:getImageUrl,
+      nameBIB:name ,
+      
+    }; 
+    dispatch({
+      type: "Add",
+      dataSet,
+    });
+
+  };
+  
+  return (
     <Container>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {
+steps.map
+((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
       <Box>
         <Title>ข้อมูลส่วนตัว</Title>
-        <select>
-          <option value="option1">นางสาว</option>
-          <option value="option2">นาง</option>
-          <option selected value="option3">
-            นาย
-          </option>
-          <option value="option4">เด็กหญิง</option>
-          <option value="option5">เด็กชาย</option>
-        </select>
-        <Label for="firstNameT"> ชื่อ : </Label>
-        <Input name="firstNameT" placeholder="กรุณากรอกชื่อ" />
-        <Label for="lastNameT"> นามสกุล : </Label>
-        <Input name="lastNameT" placeholder="กรุณากรอกนามสกุล" />
-        <br />
 
-        <select>
-          <option value="option6">Miss</option>
-          <option value="option7">Mrs</option>
-          <option selected value="option8">
-            Mr
-          </option>
-        </select>
-        <Label for="firstNameE"> FirstName : </Label>
-        <Input name="firstNameE" placeholder="Please Enter Your FirstName" />
-        <Label for="lastNameE"> LastName : </Label>
-        <Input name="lastNameE" placeholder="Please Enter Your LastName" />
-        <br />
-        <Label for="DateBirth"> วันเดือนปีเกิด : </Label>
-        <Input name="Date" placeholder="XX-XX-1999" />
-        <br />
-        <Label for="Email"> Email: </Label>
-        <Input name="Email" placeholder="e.g.........@......." />
-        <br />
-        <Label for="IdPersonal"> เลขบัตรประจำตัวประชาชน : </Label>
-        <Input name="IdPersonal" placeholder="X-XXXX-XXXX-XXXX" />
-        <br />
-        <Label for="Address"> ที่อยู่ : </Label>
-        <Input name="Address" placeholder="กรุณากรอกที่อยู่" />
-        <br />
-        <Label for="Phone"> เบอร์โทรศัพท์: </Label>
-        <Input name="Phone" placeholder="+66-XXXX-XXXX" />
-        <br />
-        <Label for="BIB"> ชื่อบนเบอร์วิ่ง: </Label>
-        <Input name="BIB" placeholder="XXXXXXXXXX" />
-        <br />
-        <Label for="Image"> รูปถ่ายหน้าตรง</Label>
-        <br />
+        <Label style={{marginTop :26}} for="DateBirth"> ชื่อไทย </Label>
+        <span style={{ display: "flex", flexDirection: "row", marginTop: 16 }}>
+          <FormControl
+            style={{ width: 150, height: "100%" }}
+            variant="outlined"
+            className={classes.formControl}
+          >
+            <InputLabel id="demo-simple-select-outlined-label">
+              คำนำหน้า
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={getPrefixTh}
+              onChange={handleChangeTh}
+              label="คำนำหน้า"
+            >
+              <MenuItem value={1}>นาย</MenuItem>
+              <MenuItem value={2}>นางสาว</MenuItem>
+              <MenuItem value={3}>นาง</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            style={{ marginLeft: 16 ,width: '50%' }}
+            id="outlined-basic"
+            placeholder="FirstName TH"
+            onChange={handleChangeFirstNameTH}
+            variant="outlined"
+            defaultValue={getFirstNameTH}
+          />
+          {/* <Input style={{width: 100}} name="firstNameT" placeholder="กรุณากรอกชื่อ" /> */}
+          <TextField
+            style={{ marginLeft: 16,width: '50%' }}
+            id="outlined-basic"
+            label="LastName TH"
+            onChange={handleChangeLastNameTH}
+            variant="outlined"
+          />
+        </span>
+        <Label style={{marginTop :26}} for="DateBirth"> ชื่ออังกฤษ </Label>
+        <span style={{ display: "flex", flexDirection: "row", marginTop: 24 }}>
+          <FormControl
+            style={{ width: 150, height: "100%" }}
+            variant="outlined"
+            className={classes.formControl}
+            
+          >
+            <InputLabel id="demo-simple-select-outlined-label">
+              คำนำหน้า
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={getPrefixEng}
+              onChange={handleChangeEng}
+              label="คำนำหน้า"
+            >
+              <MenuItem value={1}>Mr</MenuItem>
+              <MenuItem value={2}>Miss</MenuItem>
+              <MenuItem value={3}>Mrs</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            style={{ marginLeft: 16 ,width: '50%' }}
+            id="outlined-basic"
+            label="FirstName ENG"
+            variant="outlined"
+            onChange={handleChangeFirstNameENG}
+          />
+          {/* <Input style={{width: 100}} name="firstNameT" placeholder="กรุณากรอกชื่อ" /> */}
+          <TextField
+            style={{ marginLeft: 16,width: '50%' }}
+            id="outlined-basic"
+            label="LastName ENG"
+            variant="outlined"
+            onChange={handleChangeLastNameENG}
+          />
+        </span>
+        <Label style={{marginTop :26}} for="DateBirth"> วันเดือนปีเกิด </Label>
+        <TextField
+            style={{width: '50%',marginTop:16}}
+            id="outlined-basic"
+            label="วันเดือนปีเกิด"
+            variant="outlined"
+            onChange={handleChangeDate}
+          />
+            <Label style={{marginTop :26}} for="Email"> Email </Label>
+        <TextField
+            style={{width: '50%',marginTop:16}}
+            id="outlined-basic"
+            label="e.g.........@......."
+            variant="outlined"
+            onChange={handleChangeEmail}
+          />
+            <Label style={{marginTop :26}} for="DateBirth"> เลขบัตรประจำตัวประชาชน </Label>
+        <TextField
+            style={{width: '50%',marginTop:16}}
+            id="outlined-basic"
+            label="X-XXXX-XXXX-XXXX"
+            variant="outlined"
+            onChange={handleChangeId}
+          />
+            <Label style={{marginTop :26}} for="DateBirth"> ที่อยู่ </Label>
+            <TextField  style={{width: '50%',marginTop:16}}
+          id="outlined-multiline-static"
+          label="กรุณากรอกที่อยู่"
+          multiline
+          rows={4}
+          defaultValue=""
+          variant="outlined"
+          onChange={handleChangeAddress}
+        />
+
+            <Label style={{marginTop :26}} for="DateBirth"> เบอร์โทรศัพท์ </Label>
+        <TextField
+            style={{width: '50%',marginTop:16}}
+            id="outlined-basic"
+            label="+66-XXXX-XXXX"
+            variant="outlined"
+            onChange={handleChangePhoneNumber}
+          />
+           <Label style={{marginTop :26}} for="DateBirth"> รูปถ่ายหน้าตรง </Label>
         <input
           type="file"
           name="picField"
           id="picField"
           size="24"
-          onchange="preview_2(this);"
+          onChange="preview_2(this);"
           alt=""
+          onChange={handleChangeImageUrl}
         />
 
-        <NextButton>
+        <NextButton onClick={()=> submitButton()}>
           <Span>Submit</Span>
         </NextButton>
       </Box>
     </Container>
   );
 }
-
 const mapStateToProps = function (state) {
   return {
-    counters: state,
+    dataFromStore: state,
   };
 };
 
@@ -83,7 +299,6 @@ export default connect(mapStateToProps)(Personal);
 
 const Box = styled.div`
   border-solid: 1px;
-  border-radius: 10px;
   padding: 20px;
   background-color: #ffffff;
 `;
@@ -115,7 +330,7 @@ const NextButton = styled.button`
 const Title = styled.div`
   display: flex;
   margin-top: 0px;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 25px;
 `;
 
@@ -135,20 +350,6 @@ const Input = styled.input`
   color: rgb(42, 42, 51);
   -webkit-font-smoothing: antialiased;
   text-transform: none;
-`;
-
-const Select = styled.div`
-  width: 100%;
-  min-width: 15ch;
-  max-width: 30ch;
-  border: 1px solid var(--select-border);
-  border-radius: 0.25em;
-  padding: 0.25em 0.5em;
-  font-size: 1.25rem;
-  cursor: pointer;
-  line-height: 1.1;
-  background-color: #fff;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 `;
 
 const Label = styled.div``;

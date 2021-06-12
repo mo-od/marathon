@@ -1,3 +1,9 @@
+// const data = [{
+//   emergencyContact: [{fullName: "",relative:"",phoneNo:""},{fullName: "",relative:"",phoneNo:""}],
+// }]
+
+
+
 export default (state = [], action) => {
     switch (action.type) {
       case "Add":
