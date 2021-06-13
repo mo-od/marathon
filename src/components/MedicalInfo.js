@@ -30,7 +30,7 @@ function getSteps() {
   ];
 }
 
-function MedicalInfo({ dispatch, dataFromStore }) {
+function MedicalInfo({ dispatch, dataFromStore, setStepPer }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(3);
@@ -90,8 +90,8 @@ function MedicalInfo({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello",getBloodType,getAllergy,getAboutAllergy,getCongenitalDisease, getSurgicalHistory,getPlanToHaveChildren,getDrugEatRegularly,getBeenInjured,getRegularExercise,getEverHadChestPain);
-    const dataSet = {
+      setStepPer(4);    
+      const dataSet = {
       BloodType: getBloodType,
       allergy: getAllergy,
       aboutAllergy: getAboutAllergy,

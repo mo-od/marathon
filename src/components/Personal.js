@@ -12,6 +12,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
+import Modal from "react-modal";
+import { green } from "@material-ui/core/colors";
+import NumberFormat from "react-number-format";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +29,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
+const customStyles = {
+  content: {
+    top: "45%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    backgroundColor: "white",
+  },
+};
 
 function getSteps() {
   return [
@@ -48,9 +62,84 @@ function getSteps() {
 //       return 'Unknown stepIndex';
 //   }
 // }
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
 
-function Personal({ dispatch, dataFromStore }) {
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      maxLength = {10}
+      isNumericString
+     
+    />
+  );
+}
+
+NumberFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+function IdFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      maxLength = {13}
+      isNumericString
+     
+    />
+  );
+}
+
+IdFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+function BIBFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      maxLength = {10}
+      
+     
+    />
+  );
+}
+function Personal({ dispatch, dataFromStore, setStepPer }) {
   console.log("counters ::", dataFromStore);
+
   const [getFirstNameTH, setFirstNameTH] = useState("");
   const [getLastNameTH, setLastNameTH] = useState("");
   const [getFirstNameENG, setFirstNameENG] = useState("");
@@ -59,16 +148,16 @@ function Personal({ dispatch, dataFromStore }) {
   const [getEmail, setEmail] = useState("");
   const [getId, setId] = useState("");
   const [getAddress, setAddress] = useState("");
-  const [getPhoneNumber, setPhoneNumber] = useState("");
+  const [getPhoneNumber, setPhoneNumber] = useState({ numberFormat: "" });
   const [getImageUrl, setImageUrl] = useState("");
-
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [getPrefixTh, setPrefixTh] = useState("");
   const [getPrefixEng, setPrefixEng] = useState("");
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const [name, setName] = useState("");
-
+  var subtitle;
   const handleChangeFirstNameTH = (event) => {
     setFirstNameTH(event.target.value);
   };
@@ -105,9 +194,47 @@ function Personal({ dispatch, dataFromStore }) {
   const handleChangeEng = (event) => {
     setPrefixEng(event.target.value);
   };
+  const handleChangeName = (event) => {
+    setName(event.target.value);
+  };
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function handleValidate() {
+    if (
+      getPrefixTh &&
+      getFirstNameTH &&
+      getLastNameTH &&
+      getPrefixEng &&
+      getFirstNameENG &&
+      getLastNameENG &&
+      getDate &&
+      getEmail &&
+      getId &&
+      getAddress &&
+      getPhoneNumber &&
+      getImageUrl &&
+      name
+    )
+      setStepPer(1);
+    else {
+      setIsOpen(true);
+    }
+  }
 
   const submitButton = () => {
     console.log("hello", getFirstNameTH);
+    handleValidate();
     const dataSet = {
       prefixTH: getPrefixTh,
       firstNameTH: getFirstNameTH,
@@ -131,6 +258,22 @@ function Personal({ dispatch, dataFromStore }) {
 
   return (
     <Container>
+      
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2
+          style={{ color: "red" }}
+          ref={(_subtitle) => (subtitle = _subtitle)}
+        >
+          กรุณากรอกให้ครบ
+        </h2>
+        <button onClick={closeModal}>close</button>
+      </Modal>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -252,8 +395,11 @@ function Personal({ dispatch, dataFromStore }) {
         </Label>
         <TextField
           style={{ width: "50%", marginTop: 16 }}
-          id="outlined-basic"
-          label="X-XXXX-XXXX-XXXX"
+          name="format"
+          id="formatted-numberformat-input"
+          InputProps={{
+            inputComponent: IdFormatCustom,
+          }}
           variant="outlined"
           onChange={handleChangeId}
         />
@@ -278,10 +424,26 @@ function Personal({ dispatch, dataFromStore }) {
         </Label>
         <TextField
           style={{ width: "50%", marginTop: 16 }}
-          id="outlined-basic"
-          label="+66-XXXX-XXXX"
+          name="numberformat"
+          id="formatted-numberformat-input"
+          InputProps={{
+            inputComponent: NumberFormatCustom,
+          }}
           variant="outlined"
           onChange={handleChangePhoneNumber}
+        />
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          ชื่อบนเบอร์เสื้อ{" "}
+        </Label>
+        <TextField
+          style={{ width: "50%", marginTop: 16 }}
+          id="outlined-basic"
+          InputProps={{
+            inputComponent: BIBFormatCustom,
+          }}
+          variant="outlined"
+          onChange={handleChangeName}
         />
         <Label style={{ marginTop: 26 }} for="DateBirth">
           {" "}

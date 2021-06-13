@@ -31,7 +31,7 @@ function getSteps() {
   ];
 }
 
-function SouvenirShirt({ dispatch, dataFromStore }) {
+function SouvenirShirt({ dispatch, dataFromStore, setStepPer }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(4);
@@ -44,7 +44,7 @@ function SouvenirShirt({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello",getShirtSize );
+    alert("คุณได้ทำการลงทะเบียนเรียบร้อย");
     const dataSet = {
       ShirtSize:getShirtSize,
     };

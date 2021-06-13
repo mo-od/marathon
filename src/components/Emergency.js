@@ -30,7 +30,7 @@ function getSteps() {
   ];
 }
 
-function Emergency({ dispatch, dataFromStore }) {
+function Emergency({ dispatch, dataFromStore,setStepPer }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(2);
@@ -50,7 +50,7 @@ function Emergency({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello", getName);
+    setStepPer(3);
     const dataSet = {
       Name: getName,
       Relation: getRelation,

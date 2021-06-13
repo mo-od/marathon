@@ -30,7 +30,7 @@ function getSteps() {
   ];
 }
 
-function AboutRunning({ dispatch, dataFromStore }) {
+function AboutRunning({ dispatch, dataFromStore, setStepPer }) {
   console.log("counters ::", dataFromStore);
   const [getTimeFinish, setTimeFinish] = useState("");
   const classes = useStyles();
@@ -38,6 +38,7 @@ function AboutRunning({ dispatch, dataFromStore }) {
   const steps = getSteps();
   const [getNever, setNever] = useState("");
   const [getEver, setEver] = useState("");
+  
   const handleChangeTimeFinish = (event) => {
     setTimeFinish(event.target.value);
   };
@@ -49,7 +50,7 @@ function AboutRunning({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello", getNever);
+    setStepPer(2);
     const dataSet = {
       timeFinish: getTimeFinish,
       Never: getNever,
