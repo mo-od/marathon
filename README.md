@@ -1,5 +1,6 @@
 1   Folder Structure ที่จะใช้ในการจัดวาง  ?
-	https://ibb.co/HV4GbDw
+	
+	![image]https://ibb.co/HV4GbDw
 
 2.   Library ที่คาดว่าจะใช้สำหรับ Project นี้ พร้อมทั้งระบุด้วยว่าทำไมถึงเลือกใช้ เช่น ใช้ lodash สำหรับการจัดการข้อมูล
         1  .prop-types  เอาไว้เช็ค type number of format
