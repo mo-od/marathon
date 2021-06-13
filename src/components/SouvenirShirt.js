@@ -1,10 +1,70 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled from "styled-components";
+import React, {useState} from "react";
+import TextField from "@material-ui/core/TextField";
+import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
 
-function SouvenirShirt() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+  },
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
+
+function getSteps() {
+  return [
+    "ข้อมูลส่วนตัว",
+    "ข้อมูลเกี่ยวกับการวิ่ง",
+    "ผู้ติดต่อฉุกเฉิน",
+    "ข้อมูลทางการแพทย์",
+    "เสื้อของที่ระลึก",
+    
+  ];
+}
+
+function SouvenirShirt({ dispatch, dataFromStore }) {
+  console.log("counters ::", dataFromStore);
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = getSteps();
+  const [getShirtSize, setShirtSize] = useState("");
+
+
+  const handleChangeShirtSize = (event) => {
+    setShirtSize(event.target.value);
+  };
+
+  const submitButton = () => {
+    console.log("hello", );
+    const dataSet = {
+      ShirtSize:getShirtSize,
+    };
+    dispatch({
+      type: "Add",
+      dataSet,
+    });
+  };
+
     return (
         <Container>
-            
+            <Stepper activeStep={activeStep} alternativeLabel>
+        {
+steps.map
+((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
             <Box>
             <Title>เสื้อที่ระลึก</Title>
             <Query>ไซส์เสื้อ</Query>
@@ -15,13 +75,17 @@ function SouvenirShirt() {
             <input type="radio" /><label>XL</label>
             <input type="radio" /><label>XXL</label>
             <input type="radio" /><label>XXXL</label>
-            <NextButton><Span>Submit</Span></NextButton>
+            <NextButton onClick={() => submitButton()}><Span>Submit</Span></NextButton>
             </Box>
         </Container>
     )
 }
-
-export default SouvenirShirt
+const mapStateToProps = function (state) {
+  return {
+    dataFromStore: state,
+  };
+};
+export default connect(mapStateToProps)(SouvenirShirt);
 
 const NextButton = styled.button`
             border-radius: 4px;

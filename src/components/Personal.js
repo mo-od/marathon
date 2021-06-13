@@ -33,7 +33,6 @@ function getSteps() {
     "ผู้ติดต่อฉุกเฉิน",
     "ข้อมูลทางการแพทย์",
     "เสื้อของที่ระลึก",
-    
   ];
 }
 
@@ -52,19 +51,16 @@ function getSteps() {
 
 function Personal({ dispatch, dataFromStore }) {
   console.log("counters ::", dataFromStore);
-  const [getFirstNameTH, setFirstNameTH] = useState("")
-  const [getLastNameTH, setLastNameTH] = useState("")
-  const [getFirstNameENG, setFirstNameENG] = useState("")
-  const [getLastNameENG, setLastNameENG] = useState("")
-  const [getDate, setDate] = useState("")
-  const [getEmail, setEmail] = useState("")
-  const [getId, setId] = useState("")
-  const [getAddress, setAddress] = useState("")
-  const [getPhoneNumber, setPhoneNumber] = useState("")
-  const [getImageUrl, setImageUrl] = useState("")
-  
-
-
+  const [getFirstNameTH, setFirstNameTH] = useState("");
+  const [getLastNameTH, setLastNameTH] = useState("");
+  const [getFirstNameENG, setFirstNameENG] = useState("");
+  const [getLastNameENG, setLastNameENG] = useState("");
+  const [getDate, setDate] = useState("");
+  const [getEmail, setEmail] = useState("");
+  const [getId, setId] = useState("");
+  const [getAddress, setAddress] = useState("");
+  const [getPhoneNumber, setPhoneNumber] = useState("");
+  const [getImageUrl, setImageUrl] = useState("");
 
   const [getPrefixTh, setPrefixTh] = useState("");
   const [getPrefixEng, setPrefixEng] = useState("");
@@ -72,7 +68,7 @@ function Personal({ dispatch, dataFromStore }) {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const [name, setName] = useState("");
-  
+
   const handleChangeFirstNameTH = (event) => {
     setFirstNameTH(event.target.value);
   };
@@ -109,39 +105,34 @@ function Personal({ dispatch, dataFromStore }) {
   const handleChangeEng = (event) => {
     setPrefixEng(event.target.value);
   };
-  
-    
+
   const submitButton = () => {
-    console.log("hello",getFirstNameTH)
-    const dataSet ={
+    console.log("hello", getFirstNameTH);
+    const dataSet = {
       prefixTH: getPrefixTh,
       firstNameTH: getFirstNameTH,
       lastNameTH: getLastNameTH,
       prefixENG: getPrefixEng,
       firstNameENG: getFirstNameENG,
       lastNameENG: getLastNameENG,
-      birthDay:getDate ,
-      email:getEmail ,
-      idCard:getId ,
-      address:getAddress ,
-      phoneNumber:getPhoneNumber ,
-      imageUrl:getImageUrl,
-      nameBIB:name ,
-      
-    }; 
+      birthDay: getDate,
+      email: getEmail,
+      idCard: getId,
+      address: getAddress,
+      phoneNumber: getPhoneNumber,
+      imageUrl: getImageUrl,
+      nameBIB: name,
+    };
     dispatch({
       type: "Add",
       dataSet,
     });
-
   };
-  
+
   return (
     <Container>
       <Stepper activeStep={activeStep} alternativeLabel>
-        {
-steps.map
-((label) => (
+        {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
@@ -150,7 +141,10 @@ steps.map
       <Box>
         <Title>ข้อมูลส่วนตัว</Title>
 
-        <Label style={{marginTop :26}} for="DateBirth"> ชื่อไทย </Label>
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          ชื่อไทย{" "}
+        </Label>
         <span style={{ display: "flex", flexDirection: "row", marginTop: 16 }}>
           <FormControl
             style={{ width: 150, height: "100%" }}
@@ -173,7 +167,7 @@ steps.map
             </Select>
           </FormControl>
           <TextField
-            style={{ marginLeft: 16 ,width: '50%' }}
+            style={{ marginLeft: 16, width: "50%" }}
             id="outlined-basic"
             placeholder="FirstName TH"
             onChange={handleChangeFirstNameTH}
@@ -182,20 +176,22 @@ steps.map
           />
           {/* <Input style={{width: 100}} name="firstNameT" placeholder="กรุณากรอกชื่อ" /> */}
           <TextField
-            style={{ marginLeft: 16,width: '50%' }}
+            style={{ marginLeft: 16, width: "50%" }}
             id="outlined-basic"
             label="LastName TH"
             onChange={handleChangeLastNameTH}
             variant="outlined"
           />
         </span>
-        <Label style={{marginTop :26}} for="DateBirth"> ชื่ออังกฤษ </Label>
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          ชื่ออังกฤษ{" "}
+        </Label>
         <span style={{ display: "flex", flexDirection: "row", marginTop: 24 }}>
           <FormControl
             style={{ width: 150, height: "100%" }}
             variant="outlined"
             className={classes.formControl}
-            
           >
             <InputLabel id="demo-simple-select-outlined-label">
               คำนำหน้า
@@ -213,7 +209,7 @@ steps.map
             </Select>
           </FormControl>
           <TextField
-            style={{ marginLeft: 16 ,width: '50%' }}
+            style={{ marginLeft: 16, width: "50%" }}
             id="outlined-basic"
             label="FirstName ENG"
             variant="outlined"
@@ -221,39 +217,52 @@ steps.map
           />
           {/* <Input style={{width: 100}} name="firstNameT" placeholder="กรุณากรอกชื่อ" /> */}
           <TextField
-            style={{ marginLeft: 16,width: '50%' }}
+            style={{ marginLeft: 16, width: "50%" }}
             id="outlined-basic"
             label="LastName ENG"
             variant="outlined"
             onChange={handleChangeLastNameENG}
           />
         </span>
-        <Label style={{marginTop :26}} for="DateBirth"> วันเดือนปีเกิด </Label>
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          วันเดือนปีเกิด{" "}
+        </Label>
         <TextField
-            style={{width: '50%',marginTop:16}}
-            id="outlined-basic"
-            label="วันเดือนปีเกิด"
-            variant="outlined"
-            onChange={handleChangeDate}
-          />
-            <Label style={{marginTop :26}} for="Email"> Email </Label>
+          style={{ width: "50%", marginTop: 16 }}
+          id="outlined-basic"
+          label="วันเดือนปีเกิด"
+          variant="outlined"
+          onChange={handleChangeDate}
+        />
+        <Label style={{ marginTop: 26 }} for="Email">
+          {" "}
+          Email{" "}
+        </Label>
         <TextField
-            style={{width: '50%',marginTop:16}}
-            id="outlined-basic"
-            label="e.g.........@......."
-            variant="outlined"
-            onChange={handleChangeEmail}
-          />
-            <Label style={{marginTop :26}} for="DateBirth"> เลขบัตรประจำตัวประชาชน </Label>
+          style={{ width: "50%", marginTop: 16 }}
+          id="outlined-basic"
+          label="e.g.........@......."
+          variant="outlined"
+          onChange={handleChangeEmail}
+        />
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          เลขบัตรประจำตัวประชาชน{" "}
+        </Label>
         <TextField
-            style={{width: '50%',marginTop:16}}
-            id="outlined-basic"
-            label="X-XXXX-XXXX-XXXX"
-            variant="outlined"
-            onChange={handleChangeId}
-          />
-            <Label style={{marginTop :26}} for="DateBirth"> ที่อยู่ </Label>
-            <TextField  style={{width: '50%',marginTop:16}}
+          style={{ width: "50%", marginTop: 16 }}
+          id="outlined-basic"
+          label="X-XXXX-XXXX-XXXX"
+          variant="outlined"
+          onChange={handleChangeId}
+        />
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          ที่อยู่{" "}
+        </Label>
+        <TextField
+          style={{ width: "50%", marginTop: 16 }}
           id="outlined-multiline-static"
           label="กรุณากรอกที่อยู่"
           multiline
@@ -263,15 +272,21 @@ steps.map
           onChange={handleChangeAddress}
         />
 
-            <Label style={{marginTop :26}} for="DateBirth"> เบอร์โทรศัพท์ </Label>
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          เบอร์โทรศัพท์{" "}
+        </Label>
         <TextField
-            style={{width: '50%',marginTop:16}}
-            id="outlined-basic"
-            label="+66-XXXX-XXXX"
-            variant="outlined"
-            onChange={handleChangePhoneNumber}
-          />
-           <Label style={{marginTop :26}} for="DateBirth"> รูปถ่ายหน้าตรง </Label>
+          style={{ width: "50%", marginTop: 16 }}
+          id="outlined-basic"
+          label="+66-XXXX-XXXX"
+          variant="outlined"
+          onChange={handleChangePhoneNumber}
+        />
+        <Label style={{ marginTop: 26 }} for="DateBirth">
+          {" "}
+          รูปถ่ายหน้าตรง{" "}
+        </Label>
         <input
           type="file"
           name="picField"
@@ -282,7 +297,7 @@ steps.map
           onChange={handleChangeImageUrl}
         />
 
-        <NextButton onClick={()=> submitButton()}>
+        <NextButton onClick={() => submitButton()}>
           <Span>Submit</Span>
         </NextButton>
       </Box>
