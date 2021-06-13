@@ -33,7 +33,7 @@ function getSteps() {
 function Emergency({ dispatch, dataFromStore }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const steps = getSteps();
   const [getName, setName] = useState("");
   const [getRelation, setRelation] = useState("");

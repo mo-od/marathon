@@ -34,17 +34,26 @@ function AboutRunning({ dispatch, dataFromStore }) {
   console.log("counters ::", dataFromStore);
   const [getTimeFinish, setTimeFinish] = useState("");
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const steps = getSteps();
-
+  const [getNever, setNever] = useState("");
+  const [getEver, setEver] = useState("");
   const handleChangeTimeFinish = (event) => {
     setTimeFinish(event.target.value);
   };
+  const handleChangeNever = (event) => {
+    setNever(event.target.value);
+  };
+  const handleChangeEver = (event) => {
+    setEver(event.target.value);
+  };
 
   const submitButton = () => {
-    console.log("hello", getTimeFinish);
+    console.log("hello", getNever);
     const dataSet = {
       timeFinish: getTimeFinish,
+      Never: getNever,
+      Ever: getEver,
     };
     dispatch({
       type: "Add",
@@ -67,9 +76,9 @@ function AboutRunning({ dispatch, dataFromStore }) {
           มาก่อนหรือไม่{" "}
         </Query>
         <span>
-          <input type="radio" id="ever" class name="ever" value="ever" />
+          <input type="radio" id="ever" name="neverEver" value="ever" onChange={handleChangeEver} defaultValue={getEver} />
           <label for="ever">เคย</label>
-          <input type="radio" id="never" class name="never" value="never" />
+          <input type="radio" id="never" name="neverEver" value="never" onChange={handleChangeNever} defaultValue={getNever} />
           <label for="never">ไม่เคย</label>
         </span>
 

@@ -34,7 +34,7 @@ function getSteps() {
 function SouvenirShirt({ dispatch, dataFromStore }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(4);
   const steps = getSteps();
   const [getShirtSize, setShirtSize] = useState("");
 
@@ -44,7 +44,7 @@ function SouvenirShirt({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello", );
+    console.log("hello",getShirtSize );
     const dataSet = {
       ShirtSize:getShirtSize,
     };
@@ -68,13 +68,13 @@ steps.map
             <Box>
             <Title>เสื้อที่ระลึก</Title>
             <Query>ไซส์เสื้อ</Query>
-            <input type="radio" /><label>XS</label>
-            <input type="radio" /><label>S</label>
-            <input type="radio" /><label>M</label>
-            <input type="radio" /><label>L</label>
-            <input type="radio" /><label>XL</label>
-            <input type="radio" /><label>XXL</label>
-            <input type="radio" /><label>XXXL</label>
+            <input type="radio"  id="size" name="size" value="XS" onChange={handleChangeShirtSize} defaultValue={getShirtSize}/><label>XS</label>
+            <input type="radio" id="size" name="size" value="S" onChange={handleChangeShirtSize} defaultValue={getShirtSize} /><label>S</label>
+            <input type="radio" id="size" name="size" value="M" onChange={handleChangeShirtSize} defaultValue={getShirtSize} /><label>M</label>
+            <input type="radio"  id="size" name="size" value="L" onChange={handleChangeShirtSize} defaultValue={getShirtSize}/><label>L</label>
+            <input type="radio" id="size" name="size" value="XL" onChange={handleChangeShirtSize} defaultValue={getShirtSize} /><label>XL</label>
+            <input type="radio" id="size" name="size" value="XXL" onChange={handleChangeShirtSize} defaultValue={getShirtSize} /><label>XXL</label>
+            <input type="radio" id="size" name="size" value="XXXL" onChange={handleChangeShirtSize} defaultValue={getShirtSize} /><label>XXXL</label>
             <NextButton onClick={() => submitButton()}><Span>Submit</Span></NextButton>
             </Box>
         </Container>

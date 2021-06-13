@@ -33,7 +33,7 @@ function getSteps() {
 function MedicalInfo({ dispatch, dataFromStore }) {
   console.log("counters ::", dataFromStore);
   const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const steps = getSteps();
   const [getBloodType, setBloodType] = useState("");
   const [getAllergy, setAllergy] = useState("");
@@ -42,8 +42,7 @@ function MedicalInfo({ dispatch, dataFromStore }) {
   const [getAboutCongenitalDisease, setAboutCongenitalDisease] = useState("");
   const [getSurgicalHistory, setSurgicalHistory] = useState("");
   const [getAboutSurgicalHistory, setAboutSurgicalHistory] = useState("");
-  const [getDateAboutSurgicalHistory, setDateAboutSurgicalHistory] =
-    useState("");
+  const [getDateAboutSurgicalHistory, setDateAboutSurgicalHistory] = useState("");
   const [getPlanToHaveChildren, setPlanToHaveChildren] = useState("");
   const [getDrugEatRegularly, setDrugEatRegularly] = useState("");
   const [getBeenInjured, setBeenInjured] = useState("");
@@ -91,7 +90,7 @@ function MedicalInfo({ dispatch, dataFromStore }) {
   };
 
   const submitButton = () => {
-    console.log("hello", getBloodType);
+    console.log("hello",getBloodType,getAllergy,getAboutAllergy,getCongenitalDisease, getSurgicalHistory,getPlanToHaveChildren,getDrugEatRegularly,getBeenInjured,getRegularExercise,getEverHadChestPain);
     const dataSet = {
       BloodType: getBloodType,
       allergy: getAllergy,
@@ -124,20 +123,20 @@ function MedicalInfo({ dispatch, dataFromStore }) {
       <Box>
         <Title>ข้อมูลทางการแพทย์</Title>
         <Query>หมู่เลือด</Query>
-        <input type="radio" id="groupA" name="groupA" value="groupA" />
+        <input type="radio" id="groupA" name="group" value="A" onChange={handleChangeBloodType} defaultValue={getBloodType}/>
         <label for="groupA">A</label>
-        <input type="radio" id="groupB" name="groupB" value="groupB" />
+        <input type="radio" id="groupB" name="group" value="B" onChange={handleChangeBloodType} defaultValue={getBloodType} />
         <label for="groupB">B</label>
-        <input type="radio" id="groupO" name="groupO" value="groupO" />
+        <input type="radio" id="groupO" name="group" value="O" onChange={handleChangeBloodType} defaultValue={getBloodType} />
         <label for="groupO">O</label>
-        <input type="radio" id="groupAB" name="groupAB" value="groupAB" />
+        <input type="radio" id="groupAB" name="group" value="AB" onChange={handleChangeBloodType} defaultValue={getBloodType} />
         <label for="groupAB">AB</label>
         <br />
         <Query>ท่านมีอาการแพ้ยาหรือสารต่างๆ หรือไม่</Query>
         <br />
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่มี" onChange={handleChangeAllergy} defaultValue={getAllergy} />
         <label>ไม่มี</label>
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="มี" onChange={handleChangeAllergy} defaultValue={getAllergy}/>
         <label>มี</label>
         <span style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
           <TextField
@@ -152,9 +151,9 @@ function MedicalInfo({ dispatch, dataFromStore }) {
 
         <Query>ท่านมีประวัติการผ่าตัดมาก่อน หรือไม่ </Query>
         <br />
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่มี" onChange={handleChangeSurgicalHistory} defaultValue={getSurgicalHistory} />
         <label>ไม่มี</label>
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="มี" onChange={handleChangeSurgicalHistory} defaultValue={getSurgicalHistory}/>
         <label>มี</label>
         <span style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
           <TextField
@@ -178,9 +177,9 @@ function MedicalInfo({ dispatch, dataFromStore }) {
         <br />
         <Query>ท่านมีโรคประจำตัว หรือไม่</Query>
         <br />
-        <input type="radio" />
+        <input type="radio"  name="NeverEver" value="ไม่มี" onChange={handleChangeCongenitalDisease} defaultValue={getCongenitalDisease}/>
         <label>ไม่มี</label>
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="มี" onChange={handleChangeCongenitalDisease} defaultValue={getCongenitalDisease} />
         <label>มี</label>
         <span style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
           <TextField
@@ -193,30 +192,39 @@ function MedicalInfo({ dispatch, dataFromStore }) {
           />
         </span>
         <Query>
-          ท่านมีแพลนที่จะมีบุตร หรือ กำลังตั้งถรรภ์ก่อนถึงช่างการแข่ง หรือไม่
+          ท่านมีแพลนที่จะมีบุตร หรือ กำลังตั้งครรภ์ก่อนถึงช่วงการแข่ง หรือไม่
         </Query>
         <br />
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่มี" onChange={handleChangePlanToHaveChildren} defaultValue={getPlanToHaveChildren}/>
         <label>ไม่มี</label>
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="มี" onChange={handleChangePlanToHaveChildren} defaultValue={getPlanToHaveChildren} />
         <label>มี</label>
         <br />
         <Query>
-          ท่านเคยบาดเจ็บ หรือ เจ็บป่าวย จากการเข้าร่วมงานวิ่ง หรือไม่
+          ท่านมียาที่ต้องทานเป็นประจำหรือไม่
         </Query>
         <br />
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่มี" onChange={handleChangeDrugEatRegularly} defaultValue={getDrugEatRegularly} />
         <label>ไม่มี</label>
-        <input type="radio" />
+        <input type="radio"  name="NeverEver" value="ไม่มี" onChange={handleChangeDrugEatRegularly} defaultValue={getDrugEatRegularly}/>
         <label>มี</label>
+        <br />
+        <Query>
+          ท่านเคยบาดเจ็บ หรือ เจ็บป่วย จากการเข้าร่วมงานวิ่ง หรือไม่
+        </Query>
+        <br />
+        <input type="radio" name="NeverEver" value="ไม่เคย" onChange={handleChangeBeenInjured} defaultValue={getBeenInjured}/>
+        <label>ไม่เคย</label>
+        <input type="radio" name="NeverEver" value="เคย" onChange={handleChangeBeenInjured} defaultValue={getBeenInjured} />
+        <label>เคย</label>
         <br />
         <Query>
           ท่านออกกำลังกายสม่ำเสมอหรือไม่ (อย่างน้อย 1-2 ครั้ง ต่อสัปดาห์)
         </Query>
         <br />
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่เคย" onChange={handleChangeRegularExercise} defaultValue={getRegularExercise} />
         <label>ไม่</label>
-        <input type="radio" />
+        <input type="radio" name="NeverEver" value="ไม่เคย" onChange={handleChangeRegularExercise} defaultValue={getRegularExercise} />
         <label>ใช่</label>
         <br />
         <Query>
@@ -224,11 +232,11 @@ function MedicalInfo({ dispatch, dataFromStore }) {
           ขณะออกกำลังกายหรือไม่
         </Query>
         <br />
-        <input type="radio" />
+        <input type="radio"  name="NeverEver" value="ไม่มี" onChange={handleChangeEverHadChestPain} defaultValue={getEverHadChestPain}/>
         <label>ไม่</label>
-        <input type="radio" />
+        <input type="radio"  name="NeverEver" value="มี" onChange={handleChangeEverHadChestPain} defaultValue={getEverHadChestPain}/>
         <label>มี</label>
-
+      
         <NextButton onClick={() => submitButton()}>
           <Span>Submit</Span>
         </NextButton>
